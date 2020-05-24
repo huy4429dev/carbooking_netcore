@@ -1,0 +1,123 @@
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Chi tiết xe";
+}
+<!-- Card deck -->
+<div class="card-deck">
+
+    <div class="row w-100">
+        <div class="col-12">
+            <div class="card mb-4">
+
+                <div class="card-body">
+                <!--Title-->
+                <h4 class="card-title">Car #0143</h4>
+                <!--Text-->
+                <p class="card-text py-2" contenteditable="true">Lưu ý : thay dầu xe cuối tháng này</p>
+                <div class="row">
+                    <div class="col-4">
+                        <p class="card-text"><span class="d-inline-block" style="width:80px"> Lái xe:  </span>
+                        <select class="browser-default custom-select">
+                                <option selected>Chọn lái xe</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                        </select>
+                        <p class="card-text"><span class="d-inline-block" style="width:80px"> Phụ xe:  </span> 
+                                <select class="browser-default custom-select">
+                                <option selected>Chọn phụ xe</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                        </select>
+                        </p>
+                        <p class="card-text"><span class="d-inline-block" style="width:80px"> Thời gian: </span>
+                                <input type="text" class="browser-default custom-select " id="datepicker">
+                                <p>
+                                <span class="d-inline-block" style="width:84px"></span><input type="text" class="browser-default custom-select " id="timeformatExample1">
+                                </p>
+                                <p>
+                                <span class="d-inline-block" style="width:84px"></span><input type="text" class="browser-default custom-select " id="timeformatExample2">
+                                </p>
+                        </p>
+
+                        <p class="card-text"><span class="d-inline-block" style="width:80px"> Hành trình:  </span> 
+                        <select class="browser-default custom-select">
+                                <option selected>Chọn hành trình</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                        </select>
+                        
+                        </p>
+                            <p class="card-text"><span class="d-inline-block" style="width:80px"> Giá vé(vnđ): </span>
+                                <input type="text" class="browser-default custom-select">
+                                <p>
+                        <p class="card-text"><span class="d-inline-block" style="width:80px"> Trạng thái: </span> 
+                        <select class="browser-default custom-select">
+                                <option selected>Chọn trạng thái</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                        </select>
+                        </p>
+
+                    </div>
+                    <div class="col-4">
+                     
+                            <p class="card-text"><span class="d-inline-block" style="width:100px"> Tổng số ghế: </span>
+                                <input type="text" class="browser-default custom-select">
+                            <p>
+                            <p class="card-text"><span class="d-inline-block" style="width:100px"> Số ghế còn lại: </span>
+                                <input type="text" class="browser-default custom-select" disabled>
+                            <p>
+
+                    </div>
+                </div>
+
+              
+                <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                <button type="button" class="btn btn-light-blue btn-md mt-4">Cập nhật</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+  <!-- Card -->
+
+  <!-- Card -->
+
+
+
+</div>
+
+
+@section Css{
+    <link rel="stylesheet" href="~/assets/css/jquery-ui.css">
+    <link rel="stylesheet" href="https://www.jonthornton.com/jquery-timepicker/jquery.timepicker.css">
+    <style>
+        .browser-default.custom-select {
+           width: 202px;
+        }
+    </style>
+}
+
+
+@section Script{
+    <script src="~/assets/js/jquery.timepicker.min.js"></script>
+     <script>
+        $(function () {
+            $('input[id$=datepicker]').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+            const now = new Date();
+            $("#datepicker").val(now.toLocaleDateString('en-GB'));
+        });
+
+        $('#timeformatExample1').timepicker({ 'timeFormat': 'H:i:s' });
+        $('#timeformatExample2').timepicker({ 'timeFormat': 'H:i:s' });
+
+    </script>
+}
