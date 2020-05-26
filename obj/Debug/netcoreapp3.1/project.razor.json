@@ -20521,6 +20521,11 @@
   "RootNamespace": "CarBooking",
   "Documents": [
     {
+      "FilePath": "c:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Employee\\index.cshtml",
+      "TargetPath": "Views\\Admin\\Employee\\index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Contact\\Index.cshtml",
       "TargetPath": "Views\\Admin\\Contact\\Index.cshtml",
       "FileKind": "mvc"

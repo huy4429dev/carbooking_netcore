@@ -4,6 +4,8 @@ using CarBooking.Models;
 using CarBooking.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+
 namespace CarBooking.Page.Controllers
 {
     public class ContactController : Controller
@@ -37,7 +39,8 @@ namespace CarBooking.Page.Controllers
                     Phone = model.Phone,
                     Subject = model.Subject,
                     Message = model.Message,
-                    Status = false
+                    Status = false,
+                    CreatedAt = DateTime.Now
                 };
 
                 await _context.Contacts.AddAsync(Contact);

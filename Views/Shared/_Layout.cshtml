@@ -52,8 +52,9 @@
                         </form>
                     </li>
                 }
-               <li class="nav__item"><a asp-action="login" asp-controller="account" class="nav__link hotline"> </i> Đăng nhập</a>
-               </li>
+                else{
+                 <li class="nav__item"><a asp-action="login" asp-controller="account" class="nav__link hotline">Đăng nhập</a></li>
+                }
             </ul>
         </div>
     </nav>

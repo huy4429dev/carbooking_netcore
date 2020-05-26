@@ -1,3 +1,5 @@
+using System;
+
 namespace CarBooking.Models
 {
     public class  Contact
@@ -9,5 +11,6 @@ namespace CarBooking.Models
         public string Subject{get;set;}
         public string Message{get;set;}
         public bool Status{get;set;}
+        public DateTime CreatedAt{get;set;}
     }
 }

@@ -13,7 +13,7 @@ namespace CarBooking.Models
         public int CarId{get;set;}
         public Car Car{get;set;}
         public int RouteId{get;set;}
-        public int UserId{get;set;}
+        public int? UserId{get;set;}
         public ApplicationUser User{get;set;}
         public Route Route{get;set;}
         public StatusTicket StatusTicket{get;set;}
