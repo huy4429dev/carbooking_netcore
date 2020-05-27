@@ -2,6 +2,8 @@
     Layout = "_LayoutAdmin";
     ViewBag.Title = "Chi tiết xe";
 }
+ 
+@model Car
 <!-- Card deck -->
 <div class="card-deck">
 
@@ -11,24 +13,29 @@
 
                 <div class="card-body">
                 <!--Title-->
-                <h4 class="card-title">Car #0143</h4>
+                <h4 class="card-title">Car #@Model.CarCode</h4>
                 <!--Text-->
-                <p class="card-text py-2" contenteditable="true">Lưu ý : thay dầu xe cuối tháng này</p>
+                <p class="card-text py-2" contenteditable="true">@Model.Description</p>
                 <div class="row">
                     <div class="col-4">
                         <p class="card-text"><span class="d-inline-block" style="width:80px"> Lái xe:  </span>
                         <select class="browser-default custom-select">
-                                <option selected>Chọn lái xe</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <option selected>Chọn lái xe</option>
+                            @foreach ( var item in ViewBag.MainDriver)
+                            {
+                                <option value="@item.Id">@item.FullName</option>
+                                
+                            }
                         </select>
                         <p class="card-text"><span class="d-inline-block" style="width:80px"> Phụ xe:  </span> 
-                                <select class="browser-default custom-select">
-                                <option selected>Chọn phụ xe</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select class="browser-default custom-select">
+                            <option selected>Chọn phụ xe</option>
+                             @foreach (var item in ViewBag.SubDriver)
+                             {
+                                <option value="@item.Id">@item.FullName</option>
+
+                             }
+                     
                         </select>
                         </p>
                         <p class="card-text"><span class="d-inline-block" style="width:80px"> Thời gian: </span>
@@ -50,15 +57,15 @@
                         </select>
                         
                         </p>
-                            <p class="card-text"><span class="d-inline-block" style="width:80px"> Giá vé(vnđ): </span>
+                            <p class="card-text"><span class="d-inline-block" style="width:80px" > Giá vé(vnđ): </span>
                                 <input type="text" class="browser-default custom-select">
                                 <p>
                         <p class="card-text"><span class="d-inline-block" style="width:80px"> Trạng thái: </span> 
-                        <select class="browser-default custom-select">
+                        <select class="browser-default custom-select" asp-for="@Model.StatusCar"> 
                                 <option selected>Chọn trạng thái</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option value="0">@StatusCar.Maintenance</option>
+                                <option value="1">@StatusCar.Ready</option>
+                                <option value="2">@StatusCar.Running</option>
                         </select>
                         </p>
 
@@ -66,12 +73,20 @@
                     <div class="col-4">
                      
                             <p class="card-text"><span class="d-inline-block" style="width:100px"> Tổng số ghế: </span>
-                                <input type="text" class="browser-default custom-select">
+                                <input type="text" class="browser-default custom-select" asp-for="@Model.SeatNumber">
                             <p>
                             <p class="card-text"><span class="d-inline-block" style="width:100px"> Số ghế còn lại: </span>
-                                <input type="text" class="browser-default custom-select" disabled>
+                                <input type="text" class="browser-default custom-select" disabled asp-for="@Model.SeatNumberRest">
                             <p>
 
+                    </div>
+                    <div class="col-4">
+                        @foreach (var item in Model.CarImages)
+                        {
+                            <li>
+                                <img src="@item.Url" alt="" width="200px">
+                            </li>
+                        }
                     </div>
                 </div>
 

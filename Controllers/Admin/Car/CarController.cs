@@ -1,98 +1,121 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using CarBooking.Data;
 using CarBooking.Models;
-using CarBooking.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
+
 namespace CarBooking.Admin.Controllers
 {
     [Route("admin/car")]
+    [Authorize(Roles = "Admin")]
     public class CarController : Controller
     {
-        private UserManager<ApplicationUser> _userManager;
-        private RoleManager<ApplicationRole> _roleManager;
-        private SignInManager<ApplicationUser> _signInManager;
+       
         private ApplicationDbContext _context;
 
         public CarController(
-
-            UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager,
-            SignInManager<ApplicationUser> signInManager,
             ApplicationDbContext context
         )
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _signInManager = signInManager;
             _context = context;
         }
 
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-            var cars = await _context.Cars.ToListAsync();
-
-        
-            return View("Views/Admin/Car/Index.cshtml");
+            var data = await _context.Cars
+                                     .Include(item => item.Employees)
+                                     .ToListAsync();
+            return View("Views/Admin/Car/Index.cshtml", data);
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Detail(int id)
         {
-            var cars = await _context.Cars.ToListAsync();
+            var car =  await _context.Cars
+                                     .Where(item => item.Id == id)
+                                     .Include(item => item.CarImages)   
+                                     .Include(item => item.Employees)
+                                     .FirstAsync();        
 
-        
-            return View("Views/Admin/Car/Detail.cshtml");
+            ViewBag.MainDriver = await _context.Employees
+                                     .Where(item => item.Position == Position.MainDriver)
+                                     .ToListAsync();
+
+            ViewBag.SubDriver  = await _context.Employees
+                                     .Where(item => item.Position == Position.SubDriver)
+                                     .ToListAsync();
+
+
+            return View("Views/Admin/Car/Detail.cshtml", car);
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> Profile([FromForm] ApplicationUser model)
+        [HttpGet("create")]
+        public IActionResult Create()
         {
+            return View("Views/Admin/Car/Create.cshtml");
+        }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _context.Users.FindAsync(Int32.Parse(userId));
-            if (ModelState.IsValid)
-            {
+        [HttpPost("create")]
+        public  async Task<IActionResult> Create([FromForm] Car model)
+        {
+            if(ModelState.IsValid){
+                
 
-                user.FullName = model.FullName;
-                user.PhoneNumber = model.PhoneNumber;
-                if (user.Email != model.Email)
-                {
-                    user.Email = model.Email;
-                }
+                // string JsonString = Request.Form["CarImages"];
+                // var CarImages  = JsonConvert.DeserializeObject<List<CarImage>>(model.CarImages);
+                
 
-                if (!string.IsNullOrEmpty(model.Password))
-                {
-                    var newPassword = _userManager.PasswordHasher.HashPassword(user, model.Password);
-                    user.PasswordHash = newPassword;
-                }
-                var res = await _userManager.UpdateAsync(user);
-            }
+               
+                // JArray  o = JArray.Parse(JsonString);
+                // foreach ( var item in o)
+                // {
+                //      dynamic data = JObject.Parse(item.ToString());
+                     
+                //      return Ok(data.Url);
 
-            return View("Views/Admin/Account/Profile.cshtml", user);
+                //     //  CarImages.Add(new CarImage(){
+                //     //      Url = data.Url,
+                //     //      Size = data.Size,
+                //     //      Created_At = DateTime.Now
+                //     //  });
+                // }
+
+
+
+                var Car = new Car {
+                    CarCode        = model.CarCode,
+                    Description    = model.Description,
+                    Thumbnail      = model.Thumbnail,
+                    SeatNumber     = model.SeatNumber,
+                    SeatNumberRest = model.SeatNumber,
+                    StatusCar      = StatusCar.Maintenance,
+                    Created_At     = DateTime.Now,
+                    CarImages      = model.CarImages
+
+                };
+
+                await _context.Cars.AddAsync(Car);
+                await _context.SaveChangesAsync();
+            
+                ViewBag.message = "Thêm xe thành công"; 
+                ModelState.Clear();
+            } 
+            return View("Views/Admin/Car/Create.cshtml");
         }
 
 
-        [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> UpdateAvatar()
+        [HttpPost("upload/thumbnail"), DisableRequestSizeLimit]
+        public IActionResult UploadThumbnail()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _context.Users.FindAsync(Int32.Parse(userId));
 
             try
             {
@@ -107,18 +130,16 @@ namespace CarBooking.Admin.Controllers
                     var typeFile = fileName.Substring(fileName.LastIndexOf("."));
                     fileName =  fileName.Substring(0,fileName.Length - typeFile.Length) + now + typeFile;
                     var fullPath = Path.Combine(pathToSave, fileName);
-                    var dbPath = Path.Combine(folderName, fileName);
+                    var thumbnail = Path.Combine(folderName, fileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         file.CopyTo(stream);
                     }
 
-                    dbPath = dbPath.Substring(7);
+                    thumbnail = thumbnail.Substring(7);
                      
-                    user.Avatar = dbPath;
-                    await _userManager.UpdateAsync(user);
 
-                    return Ok(new { dbPath });
+                    return Ok(new { thumbnail , fileSize = file.Length  });
                 }
                 else
                 {
@@ -130,6 +151,8 @@ namespace CarBooking.Admin.Controllers
                 return StatusCode(500, $"Internal server errors {e}");
             }
         }
+
+
 
     }
 }

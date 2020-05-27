@@ -18,6 +18,7 @@ namespace CarBooking.Data
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,10 +30,16 @@ namespace CarBooking.Data
             modelBuilder.ApplyConfiguration(new ContactConfigConfiguration());
             modelBuilder.ApplyConfiguration(new RouteConfigConfiguration());
             modelBuilder.ApplyConfiguration(new TicketConfigConfiguration());
+            modelBuilder.ApplyConfiguration(new EmployeeConfigConfiguration());
 
             modelBuilder.Entity<ApplicationUser>()
                   .Property(b => b.Avatar)
                   .HasDefaultValue("/uploads/avatar_default.jpg");
+
+            modelBuilder.Entity<Employee>()
+                  .Property(b => b.Avatar)
+                  .HasDefaultValue("/uploads/employee-avatar.png");
+
             base.OnModelCreating(modelBuilder);
         }
     }

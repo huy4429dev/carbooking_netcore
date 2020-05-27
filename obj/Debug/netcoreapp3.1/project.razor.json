@@ -20546,6 +20546,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Car\\Create.cshtml",
+      "TargetPath": "Views\\Admin\\Car\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
@@ -20561,6 +20566,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Route\\Index.cshtml",
+      "TargetPath": "Views\\Admin\\Route\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
@@ -20568,6 +20578,11 @@
     {
       "FilePath": "c:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\Views\\Account\\Register.cshtml",
       "TargetPath": "Views\\Account\\Register.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Employee\\create.cshtml",
+      "TargetPath": "Views\\Admin\\Employee\\create.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -20593,6 +20608,11 @@
     {
       "FilePath": "c:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\Views\\Shared\\_LayoutAdmin.cshtml",
       "TargetPath": "Views\\Shared\\_LayoutAdmin.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Ticket\\Index.cshtml",
+      "TargetPath": "Views\\Admin\\Ticket\\Index.cshtml",
       "FileKind": "mvc"
     },
     {

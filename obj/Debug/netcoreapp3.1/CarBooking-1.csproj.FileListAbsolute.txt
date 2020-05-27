@@ -74,3 +74,7 @@ C:\Users\Administrator\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Vie
 C:\Users\Administrator\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Car\Detail.cshtml.g.cs
 C:\Users\Administrator\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Contact\Index.cshtml.g.cs
 C:\Users\Administrator\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Employee\index.cshtml.g.cs
+C:\Users\Administrator\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Employee\create.cshtml.g.cs
+C:\Users\Administrator\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Car\Create.cshtml.g.cs
+C:\Users\Administrator\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Route\Index.cshtml.g.cs
+C:\Users\Administrator\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Ticket\Index.cshtml.g.cs
