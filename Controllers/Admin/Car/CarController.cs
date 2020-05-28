@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -16,7 +17,7 @@ namespace CarBooking.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class CarController : Controller
     {
-       
+
         private ApplicationDbContext _context;
 
         public CarController(
@@ -40,20 +41,37 @@ namespace CarBooking.Admin.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Detail(int id)
         {
-            var car =  await _context.Cars
+            var car = await _context.Cars
                                      .Where(item => item.Id == id)
-                                     .Include(item => item.CarImages)   
+                                     .Include(item => item.CarImages)
                                      .Include(item => item.Employees)
-                                     .FirstAsync();        
+                                     .FirstAsync();
 
             ViewBag.MainDriver = await _context.Employees
                                      .Where(item => item.Position == Position.MainDriver)
                                      .ToListAsync();
 
-            ViewBag.SubDriver  = await _context.Employees
+
+            ViewBag.SubDriver = await _context.Employees
                                      .Where(item => item.Position == Position.SubDriver)
                                      .ToListAsync();
+            var query = _context.Employees.AsQueryable();
 
+            ViewBag.CurrentMainDriver = await query
+                                        .Where(item => item.Position == Position.MainDriver)
+                                        .Where(item => item.CarId == id)
+                                        .OrderByDescending(item => item.Id)
+                                        .FirstOrDefaultAsync();
+
+            ViewBag.CurrentSubDriver = await query
+                                        .Where(item => item.Position == Position.SubDriver)
+                                        .Where(item => item.CarId == id)
+                                        .OrderByDescending(item => item.Id)
+                                        .FirstOrDefaultAsync();
+
+            ViewBag.Routes = await _context.Routes
+                                     .Where(item => item.CreatedAt >= DateTime.Now)
+                                     .ToListAsync();
 
             return View("Views/Admin/Car/Detail.cshtml", car);
         }
@@ -65,21 +83,22 @@ namespace CarBooking.Admin.Controllers
         }
 
         [HttpPost("create")]
-        public  async Task<IActionResult> Create([FromForm] Car model)
+        public async Task<IActionResult> Create([FromForm] Car model)
         {
-            if(ModelState.IsValid){
-                
+            if (ModelState.IsValid)
+            {
+
 
                 // string JsonString = Request.Form["CarImages"];
                 // var CarImages  = JsonConvert.DeserializeObject<List<CarImage>>(model.CarImages);
-                
 
-               
+
+
                 // JArray  o = JArray.Parse(JsonString);
                 // foreach ( var item in o)
                 // {
                 //      dynamic data = JObject.Parse(item.ToString());
-                     
+
                 //      return Ok(data.Url);
 
                 //     //  CarImages.Add(new CarImage(){
@@ -91,26 +110,116 @@ namespace CarBooking.Admin.Controllers
 
 
 
-                var Car = new Car {
-                    CarCode        = model.CarCode,
-                    Description    = model.Description,
-                    Thumbnail      = model.Thumbnail,
-                    SeatNumber     = model.SeatNumber,
+                var Car = new Car
+                {
+                    CarCode = model.CarCode,
+                    Description = model.Description,
+                    Thumbnail = model.Thumbnail,
+                    SeatNumber = model.SeatNumber,
                     SeatNumberRest = model.SeatNumber,
-                    StatusCar      = StatusCar.Maintenance,
-                    Created_At     = DateTime.Now,
-                    CarImages      = model.CarImages
+                    StatusCar = StatusCar.Maintenance,
+                    Created_At = DateTime.Now,
+                    CarImages = model.CarImages
 
                 };
 
                 await _context.Cars.AddAsync(Car);
                 await _context.SaveChangesAsync();
-            
-                ViewBag.message = "Thêm xe thành công"; 
+
+                ViewBag.message = "Thêm xe thành công";
                 ModelState.Clear();
-            } 
+            }
             return View("Views/Admin/Car/Create.cshtml");
         }
+
+        [HttpPost("update/{id}")]
+        public async Task<IActionResult> Update([FromForm] Car model, int id)
+        {
+
+
+            var car = await _context.Cars.FindAsync(id);
+
+            if (car != null)
+            {
+
+                // update car 
+
+                car.SeatNumber = model.SeatNumber;
+                car.SeatNumberRest = model.SeatNumber;
+                car.StatusCar = model.StatusCar;
+                await _context.SaveChangesAsync();
+
+
+                // add employees inner car  xxxxxx
+
+                var employees = model.Employees.Where(item => item.Id != 0).ToList();
+
+                if (employees.Count > 0)
+                {
+                    foreach (var item in employees)
+                    {
+                        var employee = await _context.Employees.FindAsync(item.Id);
+
+                        // update employee while change employees
+
+                        var position = employee.Position;
+
+                        var employeeByPosition = await _context.Employees
+                                                            .Where(item => item.Position == position)
+                                                            .Where(item => item.CarId == id)
+                                                            .ToListAsync(); 
+                        foreach (var em in employeeByPosition)
+                        {
+                            em.CarId = null;
+                            await _context.SaveChangesAsync();
+                        }
+
+                        employee.CarId = car.Id;
+                        await _context.SaveChangesAsync();
+
+                    }
+                }   
+
+                var routeId     = Request.Form["routes"].FirstOrDefault();
+                var ticketPrice = Request.Form["ticketPrice"].FirstOrDefault();
+
+                // make tickets 
+                if(routeId.GetType() == typeof(int)){
+
+                    var tickets = new List<Ticket>();
+
+                    for(int i = 1; i <= car.SeatNumber ; i++){
+                        tickets.Add( new Ticket{
+
+                            Price        = Convert.ToDecimal(ticketPrice),
+                            SeatNumberId = car.CarCode + "-GHE-" + i,
+                            CarId        = car.Id,
+                            Phone        = "",
+                            Address      = "",
+                            Name         = "",
+                            RouteId      = Convert.ToInt32(routeId),
+                            StatusTicket = StatusTicket.NotUsed,
+                            CreatedAt    = DateTime.Now,
+                            UpdatedAt    = DateTime.Now
+                        });
+                    }
+
+                    await _context.Tickets.AddRangeAsync(tickets);
+                    await _context.SaveChangesAsync();
+
+                    ViewBag.message = "Thêm lộ trình thành công";
+
+                    return Redirect("/admin/ticket");
+
+                }
+
+            }
+
+
+
+            return Redirect("/admin/car/" + id);
+        }
+
 
 
         [HttpPost("upload/thumbnail"), DisableRequestSizeLimit]
@@ -119,7 +228,7 @@ namespace CarBooking.Admin.Controllers
 
             try
             {
-                
+
                 var file = Request.Form.Files[0];
                 var folderName = Path.Combine("wwwroot", "uploads");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
@@ -128,7 +237,7 @@ namespace CarBooking.Admin.Controllers
                     var now = DateTime.Now.Ticks.ToString();
                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     var typeFile = fileName.Substring(fileName.LastIndexOf("."));
-                    fileName =  fileName.Substring(0,fileName.Length - typeFile.Length) + now + typeFile;
+                    fileName = fileName.Substring(0, fileName.Length - typeFile.Length) + now + typeFile;
                     var fullPath = Path.Combine(pathToSave, fileName);
                     var thumbnail = Path.Combine(folderName, fileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
@@ -137,9 +246,9 @@ namespace CarBooking.Admin.Controllers
                     }
 
                     thumbnail = thumbnail.Substring(7);
-                     
 
-                    return Ok(new { thumbnail , fileSize = file.Length  });
+
+                    return Ok(new { thumbnail, fileSize = file.Length });
                 }
                 else
                 {

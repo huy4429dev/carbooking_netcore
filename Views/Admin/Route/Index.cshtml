@@ -1,6 +1,61 @@
 @{
     Layout = "_LayoutAdmin";
-    ViewBag.Title = "Tuyến đường";
+    ViewBag.Title = "Route";
 }
- 
- <h2>Tuyến đường</h2>
+@model List<Route>
+<div class="text-right mb-2">
+         <a href="/admin/route/create" class="btn btn-primary btn-sm">
+             Thêm lộ trình
+         </a>
+</div>
+<table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th class="th-sm" >#ID
+      </th>
+      <th class="th-sm">Điểm xuất phát
+      </th>
+      <th class="th-sm">Điểm đến
+      </th>
+      <th class="th-sm">Khoảng cách (km)
+      </th>
+      <th class="th-sm">Thời gian đi
+      </th>
+      <th class="th-sm ">Thời gian đến
+      </th>
+      <th class="th-sm text-center">Thời gian tạo
+      </th>
+    </tr>
+  </thead>
+  <tbody>   
+      @foreach (var item in Model)
+      {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.StartPoint</td>
+            <td>@item.EndPoint</td>
+            <td>@item.Range</td>
+            <td>@item.TimeStart</td>
+            <td>@item.TimeEnd</td>
+            <td>@item.CreatedAt</td>
+        </tr>
+          
+      }
+  </tbody>
+</table>
+@section Css{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+}
+@section Script{
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script>
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable( 
+               {  
+                 "order": [[ 0, "desc" ]]
+               },
+            );
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}
