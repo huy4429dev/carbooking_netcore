@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using CarBooking.Models;
 
 namespace CarBooking.ViewModels
 {
@@ -9,6 +11,14 @@ namespace CarBooking.ViewModels
         public string CarCode{get;set;}
         public string RouteName{get;set;}
         public string Phone {get;set;}
+
+        public string StartPoint{get;set;}
+        public string Endpoint{get;set;}
+        public DateTime? TimeStart{get;set;}
+        public DateTime? TimeEnd{get;set;}
+        public decimal Price {get;set;}
+        public ICollection<Ticket> Tickets{get;set;}
+        public Car Car {get;set;}
         public DateTime CreatedAt{get;set;}
 
     }

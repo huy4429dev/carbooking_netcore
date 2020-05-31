@@ -2,6 +2,7 @@
     Layout = "_Layout";
     ViewBag.Title = "Vé xe";
 }
+@model List<TicketViewModel>
 @section Css{
     <style>
         .result-item__detail-desc{
@@ -150,7 +151,9 @@
                 </div>
             </div>
             <div class="col-9">
-                <div class="search-result__result">
+                @foreach ( var item in Model)
+                {
+                    <div class="search-result__result">
                     <h3 class="search-result__result-heading  mb-5 mt-4">
                         Vé xe từ Hà Nội đi Sa Pa - Lào Cai: 75 chuyến
                     </h3>
@@ -185,7 +188,7 @@
                                         </span>
                                     </h4>
                                     <span class="result-item__price">
-                                        230,000 đ
+                                     @item.Price.ToString("N2") đ
                                     </span>
                                 </div>
                                 <p class="result-item__description">
@@ -209,14 +212,13 @@
                                             </svg>
                                             <ul class="result-item__endpoint pl-4">
                                                 <li class="result-item__start">
-                                                    21:40 • Bến xe Mỹ Đình
+                                                    @(item.TimeStart.HasValue ? item.TimeStart.Value.ToString("h:ss - dd/MM/yyyy") : "" ) • @item.StartPoint
                                                 </li>
                                                 <li class="result-item__time">
                                                     5h10m
                                                 </li>
                                                 <li class="result-item__over">
-                                                    02:50
-                                                    • Bến xe Sapa
+                                                     @(item.TimeEnd.HasValue ? item.TimeEnd.Value.ToString("h:ss - dd/MM/yyyy") : "" ) • @item.Endpoint
                                                 </li>
                                             </ul>
                                         </div>
@@ -257,6 +259,7 @@
                     </div>
                    
                 </div>
+                }
             </div>
 
         </div>

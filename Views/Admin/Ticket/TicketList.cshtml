@@ -3,122 +3,43 @@
     ViewBag.Title = "List Ticket";
 }
 
-@model List<TicketViewModel>
+@model List<Ticket>
 <div class="row">
-<div class="ticket mx-3 mb-3">
-  <div class="ticket__content"> 
-    <p  class="status-ticket success ">
-      <a href="" class="">Đã đặt</a>
-    </p>
-    <p class="text-center pt-4">GHE-3321</p>
-    <div class="pl-3">
-        <p >200000 đ</p>
-        <p >Nguyễn Văn A</p>
-        <p >VietNamese</p>
-        <p >Audiq8</p>
-        <p >Hà Nội - TPHCM</p>
-        <p >20/12/2020</p>
-    </div>
-  </div>
-</div>
-<div class="ticket mx-3 mb-3">
-  <div class="ticket__content">
-          <p  class="status-ticket warning ">
-      <a href="" class="">Trống</a>
-    </p>
-    <p class="text-center pt-4">GHE-3321</p>
-    <div class="pl-3">
-        <p >200000 đ</p>
-        <p >Nguyễn Văn A</p>
-        <p >VietNamese</p>
-        <p >Audiq8</p>
-        <p >Hà Nội - TPHCM</p>
-        <p >20/12/2020</p>
-    </div>
-  </div>
-</div>
-<div class="ticket mx-3 mb-3">
-  <div class="ticket__content">
-    <p class="text-center pt-4">GHE-3321</p>
-         <p  class="status-ticket danger ">
-      <a href="" class="">Hủy</a>
-    </p>
-    <div class="pl-3">
-        <p >200000 đ</p>
-        <p >Nguyễn Văn A</p>
-        <p >VietNamese</p>
-        <p >Audiq8</p>
-        <p >Hà Nội - TPHCM</p>
-        <p >20/12/2020</p>
-    </div>
-  </div>
-</div>
-<div class="ticket mx-3 mb-3">
-  <div class="ticket__content">
-    <p class="text-center pt-4">GHE-3321</p>
-    <div class="pl-3">
-        <p >200000 đ</p>
-        <p >Nguyễn Văn A</p>
-        <p >VietNamese</p>
-        <p >Audiq8</p>
-        <p >Hà Nội - TPHCM</p>
-        <p >20/12/2020</p>
-    </div>
-  </div>
-</div>
-<div class="ticket mx-3 mb-3">
-  <div class="ticket__content">
-    <p class="text-center pt-4">GHE-3321</p>
-    <div class="pl-3">
-        <p >200000 đ</p>
-        <p >Nguyễn Văn A</p>
-        <p >VietNamese</p>
-        <p >Audiq8</p>
-        <p >Hà Nội - TPHCM</p>
-        <p >20/12/2020</p>
-    </div>
-  </div>
-</div>
-<div class="ticket mx-3 mb-3">
-  <div class="ticket__content">
-    <p class="text-center pt-4">GHE-3321</p>
-    <div class="pl-3">
-        <p >200000 đ</p>
-        <p >Nguyễn Văn A</p>
-        <p >VietNamese</p>
-        <p >Audiq8</p>
-        <p >Hà Nội - TPHCM</p>
-        <p >20/12/2020</p>
-    </div>
-  </div>
-</div>
-<div class="ticket mx-3 mb-3">
-  <div class="ticket__content">
-    <p class="text-center pt-4">GHE-3321</p>
-    <div class="pl-3">
-        <p >200000 đ</p>
-        <p >Nguyễn Văn A</p>
-        <p >VietNamese</p>
-        <p >Audiq8</p>
-        <p >Hà Nội - TPHCM</p>
-        <p >20/12/2020</p>
-    </div>
-  </div>
-</div>
-<div class="ticket mx-3 mb-3">
-  <div class="ticket__content">
-    <p class="text-center pt-4">GHE-3321</p>
-    <div class="pl-3">
-        <p >200000 đ</p>
-        <p >Nguyễn Văn A</p>
-        <p >VietNamese</p>
-        <p >Audiq8</p>
-        <p >Hà Nội - TPHCM</p>
-        <p >20/12/2020</p>
-    </div>
-  </div>
-</div>
+  @foreach (var item in Model)
+  {
+    <div class="ticket mx-3 mb-3">
+      <div class="ticket__content"> 
+        @if((int)item.StatusTicket == 1){
 
+        <p  class="status-ticket success ">
+          <a href="" class="">Đã đặt</a>
+        </p>
+
+        }
+        else if( (int)item.StatusTicket == 0){
+          <p  class="status-ticket warning ">
+            <a href="" class="">Trống</a>
+          </p>
+        }
+        else{
+             <p  class="status-ticket danger ">
+            <a href="" class="">Hủy</a>
+          </p>
+        }
+        <p class="text-center pt-4">@item.SeatNumberId</p>
+        <div class="px-3">
+            <p >@item.Price đ</p>
+            <p >@item.Name</p>
+            <p >@item.Address</p>
+            <p ></p>
+            <p >@ViewBag.route.StartPoint - @ViewBag.route.EndPoint</p>
+            <p style="font-size:14px">@(ViewBag.route.TimeStart.ToString("HH:MM tt - dd/MM/yyyy"))</p>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>
 </div>
     
     
@@ -132,7 +53,7 @@
          .ticket {
         position: relative;
         box-sizing: border-box;
-        width: 200px;
+        width: 223px;
         height: 350px;  
         padding: 20px;
         border-radius: 10px;

@@ -48,9 +48,12 @@ namespace CarBooking.Admin.Controllers
         }
 
         [HttpGet("list/{id}")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int id)
         {
-             return View("Views/Admin/Ticket/TicketList.cshtml");
+            
+             var data = await _context.Tickets.Where(item => item.RouteId == id).ToListAsync();
+             ViewBag.route = await _context.Routes.FindAsync(id);
+             return View("Views/Admin/Ticket/TicketList.cshtml",data);
         }
 
     }

@@ -184,7 +184,7 @@ namespace CarBooking.Admin.Controllers
                 var ticketPrice = Request.Form["ticketPrice"].FirstOrDefault();
 
                 // make tickets 
-                if(routeId.GetType() == typeof(int)){
+                if(Convert.ToInt32(routeId).GetType() == typeof(int)){
 
                     var tickets = new List<Ticket>();
 
