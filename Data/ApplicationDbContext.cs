@@ -20,6 +20,7 @@ namespace CarBooking.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<BookTicket> BookTickets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

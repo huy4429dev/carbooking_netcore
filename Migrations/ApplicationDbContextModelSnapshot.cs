@@ -138,6 +138,51 @@ namespace CarBooking.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("CarBooking.Models.BookTicket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SeatNumberId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("TicketId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TicketId");
+
+                    b.ToTable("BookTickets");
+                });
+
             modelBuilder.Entity("CarBooking.Models.Car", b =>
                 {
                     b.Property<int>("Id")
@@ -158,7 +203,8 @@ namespace CarBooking.Migrations
                     b.Property<int>("SeatNumber")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SeatNumberRest")
+                    b.Property<int?>("SeatNumberRest")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int>("StatusCar")
@@ -281,7 +327,8 @@ namespace CarBooking.Migrations
                     b.Property<int>("Position")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("YearOfBirth")
+                    b.Property<DateTime?>("YearOfBirth")
+                        .IsRequired()
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
@@ -343,17 +390,20 @@ namespace CarBooking.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<float>("Range")
+                    b.Property<float?>("Range")
+                        .IsRequired()
                         .HasColumnType("real");
 
                     b.Property<string>("StartPoint")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("TimeEnd")
+                    b.Property<DateTime?>("TimeEnd")
+                        .IsRequired()
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime>("TimeStart")
+                    b.Property<DateTime?>("TimeStart")
+                        .IsRequired()
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -517,6 +567,15 @@ namespace CarBooking.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("CarBooking.Models.BookTicket", b =>
+                {
+                    b.HasOne("CarBooking.Models.Ticket", "Ticket")
+                        .WithMany("BookTickets")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CarBooking.Models.CarImage", b =>

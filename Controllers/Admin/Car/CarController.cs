@@ -70,7 +70,7 @@ namespace CarBooking.Admin.Controllers
                                         .FirstOrDefaultAsync();
 
             ViewBag.Routes = await _context.Routes
-                                     .Where(item => item.CreatedAt >= DateTime.Now)
+                                     .Where(item => item.TimeStart >= DateTime.Now)
                                      .ToListAsync();
 
             return View("Views/Admin/Car/Detail.cshtml", car);
