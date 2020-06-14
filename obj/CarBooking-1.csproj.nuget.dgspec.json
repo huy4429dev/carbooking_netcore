@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\CarBooking-1.csproj": {}
+    "C:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\CarBooking-1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\CarBooking-1.csproj": {
+    "C:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\CarBooking-1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\CarBooking-1.csproj",
+        "projectUniqueName": "C:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\CarBooking-1.csproj",
         "projectName": "CarBooking-1",
-        "projectPath": "C:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\CarBooking-1.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Desktop\\C#\\CarBooking-1\\obj\\",
+        "projectPath": "C:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\CarBooking-1.csproj",
+        "packagesPath": "C:\\Users\\HUY 4\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\HUY 4\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -79,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
