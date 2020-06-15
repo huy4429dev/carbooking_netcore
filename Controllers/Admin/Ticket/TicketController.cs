@@ -50,6 +50,7 @@ namespace CarBooking.Admin.Controllers {
                         Endpoint = item.Route.EndPoint,
                         StartPoint = item.Route.StartPoint,
                         TimeEnd = item.Route.TimeEnd,
+                        RouteId = item.RouteId,
                         TimeStart = item.Route.TimeStart,
                         StatusTicket = item.StatusTicket,
                         SeatNumberId = item.SeatNumberId,
@@ -72,15 +73,50 @@ namespace CarBooking.Admin.Controllers {
                         StartPoint = item.Route.StartPoint,
                         TimeEnd = item.Route.TimeEnd,
                         TimeStart = item.Route.TimeStart,
+                        RouteId = item.RouteId,
                         StatusTicket = item.StatusTicket,
                         SeatNumberId = item.SeatNumberId,
                         Name = item.Name,
                         BookTickets = item.BookTickets,
 
                 }).FirstOrDefaultAsync ();
-            var ticket  = await _context.Tickets.FindAsync(id);
+            var ticket = await _context.Tickets.FindAsync (id);
             ViewBag.route = await _context.Routes.FindAsync (ticket.RouteId);
             return View ("Views/Admin/Ticket/Detail.cshtml", data);
+        }
+
+        [HttpPost ("update/{id}")]
+        public async Task<IActionResult> Update ([FromForm] Ticket model, int id) {
+
+            var found = await _context.Tickets.FindAsync (id);
+            if (found != null) {
+                var BookTicketId = Request.Form["CustomerId"];
+
+                if (model.StatusTicket == StatusTicket.Pendding) {
+                    return Redirect ("/admin/ticket/list/" + found.RouteId);
+                };
+                if (Convert.ToInt32 (BookTicketId) != 0) {
+                    var BookTicket = await _context.BookTickets.FindAsync (Int32.Parse (BookTicketId));
+                    found.Name = BookTicket.FullName;
+                    found.Phone = BookTicket.Phone;
+                    found.Address = BookTicket.Address;
+                    found.SeatNumberId = BookTicket.SeatNumberId;
+                } else {
+                    found.Name = "";
+                    found.Phone = "";
+                    found.Address = "";
+                    found.SeatNumberId = null;
+                }
+
+                ;
+                found.StatusTicket = model.StatusTicket;
+                await _context.SaveChangesAsync ();
+
+                return Redirect ("/admin/ticket/" + id);
+
+            }
+
+            return BadRequest ("Không tồn tại ticket");
         }
 
     }

@@ -10,6 +10,8 @@ namespace CarBooking.ViewModels
         public int Id { get; set; }
         public string CarCode{get;set;}
         public string RouteName{get;set;}
+
+        public int RouteId{get;set;}
         public string Phone {get;set;}
 
         public string StartPoint{get;set;}

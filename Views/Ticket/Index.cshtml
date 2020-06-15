@@ -274,7 +274,7 @@
                         <option value="" disabled>Chọn ghế</option>
                          @foreach (var seat in item.Tickets.Where(s => s.StatusTicket == StatusTicket.NotUsed))
                          {
-                             <option value="@seat.SeatNumberId" selected>@seat.SeatNumberId</option>
+                             <option value="@seat.Id" selected>@seat.SeatNumberId</option>
                          }
                     </select>
 
@@ -416,6 +416,5 @@
 	}
 	bookRoom.addEventListener('click',addBookRoom);
 	</script>
-    </script>
 
 }

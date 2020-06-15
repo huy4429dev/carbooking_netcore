@@ -61,15 +61,16 @@ namespace CarBooking.Page.Controllers
                                     .ToList();
                 return BadRequest(errors);
             }
-
+            
+            var seatNumber = await _context.Tickets.Where(item => item.Id == Convert.ToInt32(model.SeatNumberId)).Select(item => item.SeatNumberId).FirstOrDefaultAsync();
             var BookTicket = new BookTicket
             {
                 FullName = model.FullName,
                 Address = model.Address,
                 Phone = model.Phone,
                 Email = model.Email,
-                TicketId = model.TicketId,
-                SeatNumberId = model.SeatNumberId,
+                TicketId = Convert.ToInt32(model.SeatNumberId),
+                SeatNumberId = seatNumber,
                 Status = false,
                 CreatedAt = DateTime.Now
             };

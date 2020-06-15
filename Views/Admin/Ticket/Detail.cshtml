@@ -9,65 +9,111 @@
 
     <div class="row w-100">
         <div class="col-12">
-            <h5 class="ml-3">Chi tiết vé #@Model.Id</h5>
-            <div class="card mb-4">
+            <div class="d-flex justify-content-between">
+                <h5 class="ml-3">Chi tiết vé #@Model.Id</h5>
+                <a href="/admin/ticket/list/@Model.RouteId" class="btn btn-primary"><i class="fas fa-angle-left"></i></a>
+            </div>
+                    <div class="card mb-4">
+                        <div class="row">
+                            <div class="col-5">
+                                <form method="post" action="/admin/ticket/update/@Model.Id">
+                                <div asp-validation-summary="All" class="alert alert-danger text-left" style="font-size:16px;margin-top:20px; padding:0 15px;border:0" ></div>
+                                    @if(!string.IsNullOrEmpty(ViewBag.message))
+                                    {
+                                        <div class="alert alert-success">@ViewBag.message</div>
+                                    }
+                                        <div class="ticket mx-3 mb-3" onclick="detail(@Model.Id)">
+                                <div class="ticket__content"> 
+                                    @if((int)Model.StatusTicket == 1){
 
-                <form method="post" action="/admin/car/update/">
-                <div asp-validation-summary="All" class="alert alert-danger text-left" style="font-size:16px;margin-top:20px; padding:0 15px;border:0" ></div>
-                    @if(!string.IsNullOrEmpty(ViewBag.message))
-                     {
-                         <div class="alert alert-success">@ViewBag.message</div>
-                     }
-                         <div class="ticket mx-3 mb-3" onclick="detail(@Model.Id)">
-                <div class="ticket__content"> 
-                    @if((int)Model.StatusTicket == 1){
+                                    <p  class="status-ticket success ">
+                                    <a href="" class="">Đã đặt</a>
+                                    </p>
 
-                    <p  class="status-ticket success ">
-                    <a href="" class="">Đã đặt</a>
-                    </p>
+                                    }
+                                    else if( (int)Model.StatusTicket == 0){
+                                    <p  class="status-ticket warning ">
+                                        <a href="" class="">Trống</a>
+                                    </p>
+                                    }
+                                    else{
+                                        <p  class="status-ticket danger">
+                                        <a href="" class="">Hủy</a>
+                                    </p>
+                                    }
+                                    <p class="text-center pt-4">@Model.SeatNumberId</p>
+                                    <div class="px-3">
+                                        <p >@Model.Price đ</p>
+                                        <p >@Model.Name</p>
+                                        <p >@Model.Address</p>
+                                        <p ></p>
+                                        <p >@ViewBag.route.StartPoint - @ViewBag.route.EndPoint</p>
+                                        <p style="font-size:14px">@(ViewBag.route.TimeStart.ToString("HH:MM tt - dd/MM/yyyy"))</p>
+                                    </div>
+                                    
+                                    </div>
+                                    
+                                </div>
+                                    <div class="card-body">
+                                            <div>   
+                                                        <select class="browser-default custom-select" name="CustomerId">
+                                                <option value="0">Chọn khách hàng</option>
+                                            @foreach (var bookTicket in Model.BookTickets){
+                                                    <option value="@bookTicket.Id">@bookTicket.FullName</option>                                         
 
-                    }
-                    else if( (int)Model.StatusTicket == 0){
-                    <p  class="status-ticket warning ">
-                        <a href="" class="">Trống</a>
-                    </p>
-                    }
-                    else{
-                        <p  class="status-ticket danger">
-                        <a href="" class="">Hủy</a>
-                    </p>
-                    }
-                    <p class="text-center pt-4">@Model.SeatNumberId</p>
-                    <div class="px-3">
-                        <p >@Model.Price đ</p>
-                        <p >@Model.Name</p>
-                        <p >@Model.Address</p>
-                        <p ></p>
-                        <p >@ViewBag.route.StartPoint - @ViewBag.route.EndPoint</p>
-                        <p style="font-size:14px">@(ViewBag.route.TimeStart.ToString("HH:MM tt - dd/MM/yyyy"))</p>
-                    </div>
-                    
+                                                }
+
+                                            
+                                            </select>      
+                                            </div>
+                                            <div>   
+                                             <select class="browser-default custom-select mt-3" name="StatusTicket">
+                                                <option value="@StatusTicket.Pendding" selected="@(Model.StatusTicket == StatusTicket.Pendding ? true : false)">Chọn trạng thái</option>
+                                                <option value="@StatusTicket.NotUsed" selected="@(Model.StatusTicket == StatusTicket.NotUsed ? true : false)">
+                                                    Trống
+                                                </option>
+                                                <option value="@StatusTicket.Used" selected="@(Model.StatusTicket == StatusTicket.Used ? true : false)">
+                                                    Thêm khách hàng
+                                                </option>
+                                                <option value="@StatusTicket.Cancel" selected="@(Model.StatusTicket == StatusTicket.Cancel ? true : false)">
+                                                    Hủy bỏ
+                                                </option>
+                                            </select>      
+                                            </div>
+                                    <button type="submit" class="btn btn-light-blue btn-md mt-4 mx-0">Cập nhật</button>
+
+
+                                </form>
+
+                            </div>
                         </div>
-                </div>
-                    <div class="card-body">
-                            <div>   
-                                          <select class="browser-default custom-select" name="Employees[0].Id">
-                                <option>Chọn khách hàng</option>
-                             @foreach (var bookTicket in Model.BookTickets){
-                                      <option value="@bookTicket.Id">@bookTicket.FullName</option>                                         
+
+                            <div class="col-7 mt-4">
+                                @if(Model.BookTickets.Count > 0)
+                                {
+                                    <p>Khách đặt vé :</p>
+                                    @foreach(var item in Model.BookTickets){
+                                        <ul>
+                                            <li>
+                                                @item.FullName
+                                            </li>
+                                            <li>
+                                                @item.Phone
+                                            </li>
+                                            <li>
+                                                @item.Email
+                                            </li>
+                                            <li>
+                                                @item.CreatedAt.ToString("HH:mm - d / M / yyyy")
+                                            </li>
+                                        </ul>
+                                        <hr/>
+                                    }
 
                                 }
-
-                            
-                            </select>      
                             </div>
 
-                    <button type="submit" class="btn btn-light-blue btn-md mt-4">Cập nhật</button>
-
-                </form>
-
                 </div>
-
             </div>
         </div>
     </div>
