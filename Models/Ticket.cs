@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace CarBooking.Models
 {
@@ -17,6 +18,7 @@ namespace CarBooking.Models
         public ApplicationUser User{get;set;}
         public Route Route{get;set;}
         public StatusTicket StatusTicket{get;set;}
+        public ICollection<BookTicket> BookTickets{get;set;}
         public DateTime CreatedAt{get;set;}
         public DateTime UpdatedAt{get;set;}
     }

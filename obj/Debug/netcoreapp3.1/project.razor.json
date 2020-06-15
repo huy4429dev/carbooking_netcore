@@ -20541,6 +20541,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Post\\Create.cshtml",
+      "TargetPath": "Views\\Admin\\Post\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Car\\Detail.cshtml",
       "TargetPath": "Views\\Admin\\Car\\Detail.cshtml",
       "FileKind": "mvc"
@@ -20566,11 +20571,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\BookTicket\\List.cshtml",
-      "TargetPath": "Views\\Admin\\BookTicket\\List.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
@@ -20581,8 +20581,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Ticket\\Detail.cshtml",
+      "TargetPath": "Views\\Admin\\Ticket\\Detail.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Blog\\Detail.cshtml",
       "TargetPath": "Views\\Blog\\Detail.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Post\\Index.cshtml",
+      "TargetPath": "Views\\Admin\\Post\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -20598,6 +20608,11 @@
     {
       "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Account\\Login.cshtml",
       "TargetPath": "Views\\Account\\Login.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Post\\Detail.cshtml",
+      "TargetPath": "Views\\Admin\\Post\\Detail.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -20628,11 +20643,6 @@
     {
       "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Account\\Register.cshtml",
       "TargetPath": "Views\\Account\\Register.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\BookTicket\\Index.cshtml",
-      "TargetPath": "Views\\Admin\\BookTicket\\Index.cshtml",
       "FileKind": "mvc"
     },
     {

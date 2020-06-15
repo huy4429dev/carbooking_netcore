@@ -3,11 +3,14 @@
     ViewBag.Title = "List Ticket";
 }
 
-@model List<Ticket>
+@model List<TicketViewModel>
 <div class="row">
+   @{
+        var i = 1;
+    }
   @foreach (var item in Model)
   {
-    <div class="ticket mx-3 mb-3">
+    <div class="ticket mx-3 mb-3" onclick="detail(@item.Id)">
       <div class="ticket__content"> 
         @if((int)item.StatusTicket == 1){
 
@@ -22,7 +25,7 @@
           </p>
         }
         else{
-             <p  class="status-ticket danger ">
+             <p  class="status-ticket danger">
             <a href="" class="">Hủy</a>
           </p>
         }
@@ -35,8 +38,22 @@
             <p >@ViewBag.route.StartPoint - @ViewBag.route.EndPoint</p>
             <p style="font-size:14px">@(ViewBag.route.TimeStart.ToString("HH:MM tt - dd/MM/yyyy"))</p>
         </div>
+           @if(item.BookTickets.Count > 0){
+              <span data-show-alert="#modal-alert-@i" class="badge badge-info ticket-alert ">@item.BookTickets.Count</span>
+           }
+          <div class="modal-alert position-absolute" id="modal-alert-@i">
+                @foreach (var bookTicket in item.BookTickets)
+                {
+                        <p><span style="display:inline-block; width:75px">Thời gian:</span> @bookTicket.CreatedAt.ToString("dd/MM/yyyy") </p>
+                        <p><span style="display:inline-block; width:75px">Khách: @bookTicket.FullName</span></p>
+                        <p><span style="display:inline-block; width:75px">Số giờ: @bookTicket.Phone</span> </p>
+                        <hr>
+                    
+                }
+             </div>
       </div>
     </div>
+         i++;
   }
 
 </div>
@@ -58,6 +75,7 @@
         padding: 20px;
         border-radius: 10px;
         background: #fbfbfb;
+        cursor: pointer;
     }
         .ticket:before, .ticket:after {
             content: '';
@@ -79,17 +97,19 @@
             height: 100%;
             width: 100%;
             border: 6px solid #d8d8d8;
+            position: relative;
         }
         .status-ticket{
             display: inline-block;
             text-align: center;
             width: 50px;
             position: absolute;
-            right: 20px;
-            top: 20px; 
+            right: -5px;
+            top: -5px; 
             padding: 0 10px;
             font-size: 10px;
         }
+
         .status-ticket.success{
             background: #20c997;
 
@@ -105,6 +125,26 @@
             font-size: 10px;
             color: white;
         }
+
+
+            .ticket-alert{
+             position:absolute;
+             right:10px;
+             bottom:10px;
+             cursor: pointer;
+         }
+         .modal-alert{
+             top: 7px;
+            right: 32px;
+            width: 200px;
+            background: #fff3b5;
+            padding: 15px 10px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 2px  #3332;
+            font-size: 14px;
+            z-index: 999;
+            display: none;
+         }
     </style>
 }
 @section Script{
@@ -122,5 +162,23 @@
             );
             $('.dataTables_length').addClass('bs-select');
         });
+    </script>
+        <script>
+         let roomAlerts = document.querySelectorAll('.ticket-alert');
+         console.log(roomAlerts);
+         roomAlerts.forEach(item => {
+            item.addEventListener('mouseenter', function(){
+                let  alert = document.querySelector(this.dataset.showAlert);
+                alert.style.display = 'block';
+            })
+            item.addEventListener('mouseleave', function(){
+                let  alert = document.querySelector(this.dataset.showAlert);
+                alert.style.display = 'none';
+            })
+         })
+
+        function detail(id){
+            window.location.href = "/admin/ticket/" + id;
+        } 
     </script>
 }

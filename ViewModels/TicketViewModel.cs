@@ -19,6 +19,11 @@ namespace CarBooking.ViewModels
         public decimal Price {get;set;}
         public ICollection<Ticket> Tickets{get;set;}
         public Car Car {get;set;}
+        public string SeatNumberId {get;set;}
+        public string Name {get;set;}
+        public string Address {get;set;}
+        public StatusTicket StatusTicket {get;set;}
+        public ICollection<BookTicket> BookTickets{get;set;}
         public DateTime CreatedAt{get;set;}
 
     }

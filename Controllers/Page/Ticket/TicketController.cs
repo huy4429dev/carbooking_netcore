@@ -10,6 +10,7 @@ using CarBooking.Models;
 
 namespace CarBooking.Page.Controllers
 {
+    [Route("/ticket")]
     public class TicketController : Controller
     {
         private ApplicationDbContext _context;
@@ -18,6 +19,7 @@ namespace CarBooking.Page.Controllers
         {
             _context = context;
         }
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
 
@@ -30,14 +32,14 @@ namespace CarBooking.Page.Controllers
                        on car.Id equals employee.CarId
                        select new TicketViewModel()
                        {
-                           Id         = route.Id,
+                           Id = route.Id,
                            StartPoint = route.StartPoint,
-                           Endpoint   = route.EndPoint,
-                           TimeStart  = route.TimeStart,
-                           TimeEnd    = route.TimeEnd,
-                           Price      = ticket.Price,
-                           Tickets    = route.Tickets,
-                           Car        = new Car()
+                           Endpoint = route.EndPoint,
+                           TimeStart = route.TimeStart,
+                           TimeEnd = route.TimeEnd,
+                           Price = ticket.Price,
+                           Tickets = route.Tickets,
+                           Car = new Car()
                            {
                                SeatNumber = car.SeatNumber,
                                CarImages = car.CarImages,
@@ -46,8 +48,38 @@ namespace CarBooking.Page.Controllers
                            }
 
                        };
-              var result = await data.ToListAsync();
+            var result = await data.Distinct().ToListAsync();
             return View(result);
         }
+        [HttpPost("book")]
+        public async Task<IActionResult> BookTicket([FromBody] BookTicket model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Select(x => x.Value.Errors)
+                                    .Where(y => y.Count > 0)
+                                    .ToList();
+                return BadRequest(errors);
+            }
+
+            var BookTicket = new BookTicket
+            {
+                FullName = model.FullName,
+                Address = model.Address,
+                Phone = model.Phone,
+                Email = model.Email,
+                TicketId = model.TicketId,
+                SeatNumberId = model.SeatNumberId,
+                Status = false,
+                CreatedAt = DateTime.Now
+            };
+            await _context.BookTickets.AddAsync(BookTicket);
+            await _context.SaveChangesAsync();
+
+
+            return Ok(1);
+        }
     }
+
+
 }

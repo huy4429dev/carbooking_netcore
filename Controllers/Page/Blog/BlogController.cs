@@ -29,11 +29,15 @@ namespace CarBooking.Page.Controllers
             var found = await _context.Posts.FindAsync(id);
             if (found != null)
             { 
-                var post = _context.Posts.Where(p  => p.Id == id).Select(p => new {
-                  p,
-                  p.User
-                }).First();
-                return View(post.p);
+                var post = await _context.Posts.Where(p  => p.Id == id).Select(p => new  Post{
+                    Id = p.Id,
+                    Thumbnail = p.Thumbnail,
+                    Content = p.Content,
+                    Description = p.Description,
+                    UserId = p.UserId,
+                    User =  p.User
+                }).FirstOrDefaultAsync();
+                return View(post);
             }
             return BadRequest();
         }
