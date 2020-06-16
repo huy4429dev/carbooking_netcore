@@ -24,7 +24,7 @@ namespace CarBooking.Admin.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index () {
+        public IActionResult Index () {
             var data = from car in _context.Cars
             join ticket in _context.Tickets on car.Id equals ticket.CarId
             join employee in _context.Employees.Where (e => e.Position == Position.MainDriver) on car.Id equals employee.CarId
