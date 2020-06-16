@@ -3,15 +3,17 @@ using System;
 using CarBooking.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CarBooking.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200615170910_order")]
+    partial class order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,63 +340,6 @@ namespace CarBooking.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("CarBooking.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("RouteId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RouteId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("CarBooking.Models.OrderDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TicketId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("TicketId");
-
-                    b.ToTable("orderDetails");
-                });
-
             modelBuilder.Entity("CarBooking.Models.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -649,30 +594,6 @@ namespace CarBooking.Migrations
                     b.HasOne("CarBooking.Models.Car", "Car")
                         .WithMany("Employees")
                         .HasForeignKey("CarId");
-                });
-
-            modelBuilder.Entity("CarBooking.Models.Order", b =>
-                {
-                    b.HasOne("CarBooking.Models.Route", "Route")
-                        .WithMany()
-                        .HasForeignKey("RouteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarBooking.Models.OrderDetail", b =>
-                {
-                    b.HasOne("CarBooking.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarBooking.Models.Ticket", "Ticket")
-                        .WithMany()
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CarBooking.Models.Post", b =>

@@ -20551,6 +20551,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Order\\Index.cshtml",
+      "TargetPath": "Views\\Admin\\Order\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Route\\Create.cshtml",
       "TargetPath": "Views\\Admin\\Route\\Create.cshtml",
       "FileKind": "mvc"

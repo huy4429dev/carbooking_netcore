@@ -280,7 +280,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button id="bookroom" type="button" class="btn btn-primary">Đặt Vé</button>
+                    <button class="bookroom btn btn-primary" type="button" >Đặt Vé</button>
                 </div>
                 </form>
                 </div>
@@ -354,28 +354,31 @@
 
     </script>   
     <script>
-        let bookRoom = document.querySelector('#bookroom');
-        console.log(bookRoom);
-		let alertBookRoom = document.querySelector('.alert-bookroom');
-		let alertBookRoomErr = document.querySelector('.alert-bookroom-err');
-		alertBookRoom.style.display = 'none';
-		alertBookRoomErr.style.display = 'none';
-    	function addBookRoom() {
+        let bookRoom = document.querySelectorAll('.bookroom');
+		let alertBookRoom = document.querySelectorAll('.alert-bookroom');
+		let alertBookRoomErr = document.querySelectorAll('.alert-bookroom-err');
+		alertBookRoom.forEach((item,index) => {
+            item.style.display = 'none';
+        })
+		alertBookRoomErr.forEach((item,index) => {
+            item.style.display = 'none';
+        })
+    	function addBookRoom(item,index) {
 		let url = "/ticket/book";
-		let fullname = document.querySelector('input[name="FullName"]');
-		let phone = document.querySelector('input[name="Phone"]');
-		let Address = document.querySelector('input[name="Address"]');
-		let email = document.querySelector('input[name="Email"]');
-		let ticketId = document.querySelector('input[name="TicketId"]');
-		let SeatNumberId = document.querySelector('select[name="SeatNumberId"]');
+		let fullname = document.querySelectorAll('input[name="FullName"]');
+		let phone = document.querySelectorAll('input[name="Phone"]');
+		let Address = document.querySelectorAll('input[name="Address"]');
+		let email = document.querySelectorAll('input[name="Email"]');
+		let ticketId = document.querySelectorAll('input[name="TicketId"]');
+		let SeatNumberId = document.querySelectorAll('select[name="SeatNumberId"]');
 	
 		let data = {
-			Email: email.value,
-			Phone: phone.value,
-			FullName: fullname.value,
-			Address: Address.value,
-            SeatNumberId: SeatNumberId.value,
-			TicketId: ticketId.value,
+			Email: email[index].value,
+			Phone: phone[index].value,
+			FullName: fullname[index].value,
+			Address: Address[index].value,
+            SeatNumberId: SeatNumberId[index].value,
+			TicketId: ticketId[index].value,
 		};
 		fetch(url, {
 				method: 'POST',
@@ -386,9 +389,8 @@
 			})
 			.then(response => response.json())
 			.then(data => {
-				console.log(data);
 				if (data == 1) {
-					alertBookRoom.style.display = 'block';
+					alertBookRoom[index].style.display = 'block';
 					FullName.value              = '';
 					Phone.value                 = '';
 					Email.value                 = '';
@@ -401,11 +403,11 @@
 					
 				}
                 else{
-                    alertBookRoomErr.style.display = 'block'; 
-					console.log(data);
-                    alertBookRoomErr.innerHTML = data[0][0].errorMessage;
+                    alertBookRoomErr[index].style.display = 'block'; 
+                    alertBookRoomErr[index].innerHTML = data[0][0].errorMessage;
+                    console.log( alertBookRoomErr[index]);
 					setTimeout(() => {
-						alertBookRoomErr.style.display = 'none';
+						alertBookRoomErr[index].style.display = 'none';
 					},10000)
                 }
 			
@@ -414,7 +416,9 @@
 				console.log(err);
 			})
 	}
-	bookRoom.addEventListener('click',addBookRoom);
+	bookRoom.forEach((item,index) => {
+        item.addEventListener('click',() => {addBookRoom(item, index)});
+    })
 	</script>
 
 }

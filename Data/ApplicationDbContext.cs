@@ -21,6 +21,8 @@ namespace CarBooking.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<BookTicket> BookTickets { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> orderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
