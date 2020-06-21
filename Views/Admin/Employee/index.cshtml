@@ -23,23 +23,52 @@
       </th>
       <th class="th-sm">Phone
       </th>
+      <th class="th-sm">Hành động
+      </th>
     </tr>
   </thead>
   <tbody>
     @foreach (var item in Model)
     {
-    <tr>
-      <td >@item.Id</td>
-      <td>@item.FullName</td>
-      <td class="text-center"><img src="@item.Avatar" style="width:50px"></td>
-      <td class="text-center">@(@item.Position == 0 ? "Lái Xe" : "Phụ Xe")</td>
-      <td>@item.Email</td>
-      <td>@item.Phone</td>
+    <tr style="cursor:pointer">
+      <td  onclick="typeRoomDetail(@item.Id)" >@item.Id</td>
+      <td  onclick="typeRoomDetail(@item.Id)" >@item.FullName</td>
+      <td  onclick="typeRoomDetail(@item.Id)" class="text-center"><img src="@item.Avatar" style="width:50px"></td>
+      <td  onclick="typeRoomDetail(@item.Id)" class="text-center">@(@item.Position == 0 ? "Lái Xe" : "Phụ Xe")</td>
+      <td  onclick="typeRoomDetail(@item.Id)" >@item.Email</td>
+      <td  onclick="typeRoomDetail(@item.Id)" >@item.Phone</td>
+      <td  style="width:30px" class="text-center">
+        <button data-delete-id="@item.Id" type="button" class="btn btn-danger btn-sm m-0 btn-delete" data-toggle="modal" data-target="#centralModalSm">Xóa</button>
+      </td>
     </tr>
     }
   </tbody>
 </table>
+<!-- Central Modal Small -->
+<div class="modal fade" id="centralModalSm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
 
+  <!-- Change class .modal-sm to change the size of the modal -->
+  <div class="modal-dialog modal-sm" role="document">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">Delete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn chắc chắn xóa loại phòng này ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm " data-dismiss="modal">ĐÓng</button>
+        <a id="delete-item" href="/" class="btn btn-danger btn-sm">Xóa</a>
+      </div>
+    </div>
+  </div>
+</div>
 @section Css{
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <style>
@@ -62,5 +91,19 @@
             );
             $('.dataTables_length').addClass('bs-select');
         });
+    </script>
+        <script>
+        function typeRoomDetail(id){
+          window.location.href = "/admin/employee/" +  id; 
+        }
+      
+        let deleteButton = document.querySelectorAll('.btn-delete');
+        let deleteItem = document.querySelector('#delete-item');
+        deleteButton.forEach(function(item,index){
+          item.addEventListener('click', function(){
+              console.log(this.dataset.deleteId);
+              deleteItem.setAttribute('href','/admin/employee/delete/' +this.dataset.deleteId);
+          })
+        })
     </script>
 }

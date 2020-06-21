@@ -23,6 +23,7 @@ namespace CarBooking.Models
         public ICollection<Ticket> Tickets { get; set; }
         public ICollection<CarImage> CarImages { get; set; }
         public ICollection<Employee> Employees { get; set; }
+        public ICollection<CarHistory> CarHistories { get; set; }
 
     }
 }

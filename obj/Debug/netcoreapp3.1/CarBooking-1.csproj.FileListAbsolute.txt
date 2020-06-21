@@ -341,3 +341,5 @@ C:\Users\Administrator\Desktop\doan\carbooking_netcore\obj\Debug\netcoreapp3.1\C
 C:\Users\Administrator\Desktop\doan\carbooking_netcore\obj\Debug\netcoreapp3.1\CarBooking-1.pdb
 C:\Users\Administrator\Desktop\doan\carbooking_netcore\obj\Debug\netcoreapp3.1\CarBooking-1.genruntimeconfig.cache
 C:\Users\HUY 4\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Order\Index.cshtml.g.cs
+C:\Users\HUY 4\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Employee\detail.cshtml.g.cs
+C:\Users\HUY 4\Desktop\C#\CarBooking-1\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Order\detail.cshtml.g.cs

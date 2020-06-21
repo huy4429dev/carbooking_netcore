@@ -26,8 +26,6 @@ namespace CarBooking.Admin.Controllers
             _context = context;
         }
 
-
-
         [HttpGet]
         public async Task<IActionResult> Index()
         {

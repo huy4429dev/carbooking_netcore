@@ -20551,6 +20551,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Order\\detail.cshtml",
+      "TargetPath": "Views\\Admin\\Order\\detail.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Order\\Index.cshtml",
       "TargetPath": "Views\\Admin\\Order\\Index.cshtml",
       "FileKind": "mvc"
@@ -20603,6 +20608,11 @@
     {
       "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Dashboard\\index.cshtml",
       "TargetPath": "Views\\Admin\\Dashboard\\index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\HUY 4\\Desktop\\C#\\CarBooking-1\\Views\\Admin\\Employee\\detail.cshtml",
+      "TargetPath": "Views\\Admin\\Employee\\detail.cshtml",
       "FileKind": "mvc"
     },
     {

@@ -22,8 +22,15 @@
             <input type="text" id="defaultSubscriptionFormPhone" class="form-control mb-4" placeholder="Phone" asp-for="Phone">
             <input type="text" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="Địa chỉ" asp-for="Address">
             <select class="browser-default custom-select mb-4" asp-for="Position">
+                <option value="10" selected>Chọn nhiệm vụ</option>
                 <option value="0">Lái Xe</option>
                 <option value="1">Phụ Xe</option>
+            </select >
+                <select style="display:none" class="browser-default custom-select mb-4" asp-for="DriverLicense">
+                <option value="1">B1</option>
+                <option value="2">B2</option>
+                <option value="3">D</option>
+                <option value="4">E</option>
             </select>
             <div class="text-left">
                 <button class="btn btn-primary btn-sm" type="submit">Thêm</button>
@@ -45,8 +52,25 @@
                 changeYear: true,
                 changeMonth: true,
             });
-    
+
         });
+        let empType = document.querySelector('#Position');
+          let DriverLicense = document.querySelector('#DriverLicense');
+            if(empType.value == 0   ){
+                DriverLicense.style.display = 'block';
+            }
+            else{
+                                DriverLicense.style.display = 'none';
+            }
+      
+        empType.addEventListener('change', function(){
+            if(empType.value == 0){
+                DriverLicense.style.display = 'block';
+            }
+                else{
+                                DriverLicense.style.display = 'none';
+            }
+        })
     </script>
 
     

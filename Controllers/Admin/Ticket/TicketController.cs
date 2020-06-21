@@ -105,7 +105,6 @@ namespace CarBooking.Admin.Controllers {
                     found.Name = "";
                     found.Phone = "";
                     found.Address = "";
-                    found.SeatNumberId = null;
                 }
 
                 ;

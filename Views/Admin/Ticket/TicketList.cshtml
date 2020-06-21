@@ -24,9 +24,16 @@
             <a href="" class="">Trống</a>
           </p>
         }
+
+        else if ((int)item.StatusTicket == 2){
+                  <p  class="status-ticket danger">
+            <a href="" class="">Hủy</a>
+          </p>
+        }
+
         else{
              <p  class="status-ticket danger">
-            <a href="" class="">Hủy</a>
+            <a href="" class="">Hết hạn</a>
           </p>
         }
         <p class="text-center pt-4">@item.SeatNumberId</p>
@@ -102,7 +109,7 @@
         .status-ticket{
             display: inline-block;
             text-align: center;
-            width: 50px;
+            width: 60px;
             position: absolute;
             right: -5px;
             top: -5px; 

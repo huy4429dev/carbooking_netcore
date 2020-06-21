@@ -1,35 +1,48 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using CarBooking.Data;
+using CarBooking.Models;
+using CarBooking.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using CarBooking.Data;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using System.IO;
-using System;
-using System.Net.Http.Headers;
-using CarBooking.Models;
-using System.Security.Claims;
-using CarBooking.ViewModels;
 
-namespace CarBooking.Admin.Controllers
-{
-    [Route("admin/order")]
-    [Authorize(Roles = "Admin")]
-    public class OrderController : Controller
-    {
+namespace CarBooking.Admin.Controllers {
+    [Route ("admin/order")]
+    [Authorize (Roles = "Admin")]
+    public class OrderController : Controller {
         private ApplicationDbContext _context;
 
-        public OrderController(
+        public OrderController (
             ApplicationDbContext context
-        )
-        {
+        ) {
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            
-            return View("/Views/Admin/Order/Index.cshtml");
+        public async Task<IActionResult> Index () {
+            var data = await _context.Orders
+                .OrderByDescending (item => item.Id)
+                .Select (item => new OrderViewModel {
+                    Id = item.Id,
+                        Amount = item.Amount,
+                        Route = item.Route,
+                        Car = item.Route.Tickets.FirstOrDefault ().Car,
+                        CreatedAt = DateTime.Now
+                })
+                .ToListAsync ();
+            return View ("/Views/Admin/Order/Index.cshtml", data);
+        }
+        
+        [HttpGet("{id}")]
+        public async Task<IActionResult> detail (int id) {
+
+           
+            return View ("/Views/Admin/Order/Detail.cshtml");
+
         }
     }
 }

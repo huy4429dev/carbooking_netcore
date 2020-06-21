@@ -23,6 +23,7 @@ namespace CarBooking.Data
         public DbSet<BookTicket> BookTickets { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> orderDetails { get; set; }
+        public DbSet<CarHistory> CarHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,7 +45,26 @@ namespace CarBooking.Data
                   .Property(b => b.Avatar)
                   .HasDefaultValue("/uploads/employee-avatar.png");
 
+
+                  
+            modelBuilder.Entity<CarHistory>()
+                .HasKey(bc => bc.Id);
+
+            modelBuilder.Entity<CarHistory>()
+                .HasOne(bc => bc.Car)
+                .WithMany(b => b.CarHistories)
+                .HasForeignKey(bc => bc.CarId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CarHistory>()
+                .HasOne(bc => bc.Employee)
+                .WithMany(c => c.CarHistories)
+                .HasForeignKey(bc => bc.CarId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
+
+
         }
     }
 }

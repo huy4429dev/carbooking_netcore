@@ -24,7 +24,7 @@ namespace CarBooking.Page.Controllers
         {
 
             var data = from route in _context.Routes.Where(r => r.TimeStart > DateTime.Now)
-                       join ticket in _context.Tickets.Where(t => (int)t.StatusTicket != 1)
+                       join ticket in _context.Tickets.Where(t => (int)t.StatusTicket != 3)
                        on route.Id equals ticket.RouteId
                        join car in _context.Cars
                        on ticket.CarId equals car.Id
@@ -76,8 +76,6 @@ namespace CarBooking.Page.Controllers
             };
             await _context.BookTickets.AddAsync(BookTicket);
             await _context.SaveChangesAsync();
-
-
             return Ok(1);
         }
     }
