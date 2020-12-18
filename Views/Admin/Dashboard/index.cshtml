@@ -1,6 +1,10 @@
+@using System.Text.Json;
+
 @{
     Layout = "_LayoutAdmin";
     ViewBag.Title = "Dashboard";
+
+    var dataAmountLastFiveMonth = JsonSerializer.Serialize(ViewBag.Data);
 }
 
  <!--Main layout-->
@@ -17,7 +21,9 @@
 
             <!--Card content-->
             <div class="card-body">
-
+              <h5 class="text-center">
+                Biểu đồ thống kê doanh thu 6 tháng vừa qua
+              </h5>
               <canvas id="myChart"></canvas>
 
             </div>
@@ -1105,15 +1111,74 @@
 
 @section Script{
     <script>
-              // Line
+
+     var data = '@dataAmountLastFiveMonth';
+      function rhtmlspecialchars(str) {
+        if (typeof str == "string") {
+          str = str.replace(/&gt;/gi, ">");
+          str = str.replace(/&lt;/gi, "<");
+          str = str.replace(/&#039;/g, "'");
+          str = str.replace(/&quot;/gi, '"');
+          str = str.replace(/&amp;/gi, "&"); /* must do &amp; last */
+        }
+        return str;
+      }
+
+      function formatDateVN(date) {
+        var d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
+      
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
+      
+        return [day, month, year].join("-");
+      }
+
+
+      data = rhtmlspecialchars(data);
+      data = JSON.parse(data);
+
+      let lastFiveMonth = new Date();
+      lastFiveMonth.setDate(1);
+      lastFiveMonth.setMonth(lastFiveMonth.getMonth() - 5);  
+
+      let now = new Date();
+
+      lastFiveMonth = lastFiveMonth.getMonth();
+
+      let currentMonth = now.getMonth();
+
+      let currentYear = now.getFullYear();
+
+      let seriMonths = Array(6).fill(null);
+
+      seriMonths = seriMonths.map((item,index) => lastFiveMonth + index + 1);
+
+      seriMonthsMap = seriMonths.map(item => item + '/' + currentYear);
+
+      let fillData =  seriMonths.map(item =>   {
+                                        let dataItem = data.filter(d => item == d.Key);
+                                        if(dataItem.length > 0){
+                                           return dataItem[0].Amount;
+                                        }
+                                        return 0;
+                                    });
+
+      console.log(fillData);
+
+           
+
+
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: seriMonthsMap,
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    label: '#Doanh thu (vnđ)',
+                    data: fillData,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -1230,6 +1295,8 @@
                 responsive: true
             }
         });
+
+  
 
         //doughnut
         var ctxD = document.getElementById("doughnutChart").getContext('2d');
